@@ -9,7 +9,7 @@ from django.utils import timezone
 from django.utils.encoding import python_2_unicode_compatible
 from django.utils.translation import ugettext_lazy as _
 
-from ipware.ip import get_real_ip
+from ipware.ip import get_ip
 
 from . import settings as request_settings
 from .managers import RequestManager
@@ -65,7 +65,7 @@ class Request(models.Model):
         self.is_ajax = request.is_ajax()
 
         # User infomation
-        self.ip = get_real_ip(request) or '127.0.0.1'
+        self.ip = get_ip(request)
         self.referer = request.META.get('HTTP_REFERER', '')[:255]
         self.user_agent = request.META.get('HTTP_USER_AGENT', '')[:255]
         self.language = request.META.get('HTTP_ACCEPT_LANGUAGE', '')[:255]
